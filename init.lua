@@ -103,6 +103,11 @@ require("lazy").setup({
 				map('n', '<leader>f', function()
 					vim.lsp.buf.format { async = true }
 				end, bufopts)
+				
+				-- Toggle para activar/desactivar lsp_lines
+				map('n', '<leader>l', function()
+					require("lsp_lines").toggle()
+				end, bufopts)
 			end
 
 			-- Suprimir temporalmente warnings de deprecation
@@ -397,7 +402,23 @@ require("lazy").setup({
 						lualine_a = {'mode'},
 						lualine_b = {'branch'},
 						lualine_c = {'filename'},
-						lualine_x = {'filetype'},
+						lualine_x = {
+							-- Diagnósticos con iconos consistentes
+							{
+								'diagnostics',
+								sources = {'nvim_lsp'},
+								symbols = {
+									error = '✘ ',
+									warn = '▲ ',
+									info = 'ℹ ',
+									hint = '💡 '
+								},
+								colored = true,
+								update_in_insert = false,
+								always_visible = false,
+							},
+							'filetype'
+						},
 						lualine_y = {'progress'},
 						lualine_z = {'location'}
 					},
@@ -421,6 +442,76 @@ require("lazy").setup({
 			}
 		end,
 	},
+
+	-- 🔴 Error Lens - Mostrar errores en línea (como VS Code)
+	{
+		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+		config = function()
+			require("lsp_lines").setup()
+			
+			-- Configurar iconos consistentes para diagnósticos (iconos más comunes)
+			local signs = {
+				Error = "✘",  -- X para error (más compatible)
+				Warn  = "▲",  -- Triángulo para warning  
+				Hint  = "💡", -- Bombilla para hint/sugerencia
+				Info  = "ℹ",  -- i para información
+			}
+			
+			-- Aplicar iconos a los signos del margen
+			for type, icon in pairs(signs) do
+				local hl = "DiagnosticSign" .. type
+				vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+			end
+			
+			-- Configurar diagnósticos con iconos consistentes
+			vim.diagnostic.config({
+				virtual_text = {
+					prefix = function(diagnostic)
+						-- Usar iconos consistentes en el texto virtual (más compatibles)
+						local icons = {
+							[vim.diagnostic.severity.ERROR] = "✘",
+							[vim.diagnostic.severity.WARN]  = "▲",
+							[vim.diagnostic.severity.HINT]  = "💡",
+							[vim.diagnostic.severity.INFO]  = "ℹ",
+						}
+						return icons[diagnostic.severity] or "●"
+					end,
+					source = "always",
+					spacing = 4,
+					format = function(diagnostic)
+						return string.format("%s", diagnostic.message)
+					end,
+				},
+				virtual_lines = true,
+				signs = {
+					text = {
+						[vim.diagnostic.severity.ERROR] = "✘",
+						[vim.diagnostic.severity.WARN]  = "▲",
+						[vim.diagnostic.severity.HINT]  = "💡",
+						[vim.diagnostic.severity.INFO]  = "ℹ",
+					}
+				},
+				underline = true,
+				update_in_insert = false,
+				severity_sort = true,
+				float = {
+					border = "rounded",
+					source = "always",
+					header = "",
+					prefix = "",
+					format = function(diagnostic)
+						local icon = ({
+							[vim.diagnostic.severity.ERROR] = "✘ ",
+							[vim.diagnostic.severity.WARN]  = "▲ ",
+							[vim.diagnostic.severity.HINT]  = "💡 ",
+							[vim.diagnostic.severity.INFO]  = "ℹ ",
+						})[diagnostic.severity] or "● "
+						return icon .. diagnostic.message
+					end,
+				},
+			})
+		end,
+	},
 }, {
 	-- Configuración de lazy.nvim
 	defaults = {
@@ -440,13 +531,15 @@ require("lazy").setup({
 -- Keymaps básicos
 require("keymaps")
 
--- � Configurar tema (puedes cambiar aquí)
+-- 🎨 Configurar tema (puedes cambiar aquí)
 -- Opciones: 'vscode', 'catppuccin', 'tokyonight', 'rose-pine'
 vim.cmd.colorscheme('vscode')  -- Cambia por el que prefieras
 
--- �🎉 Mensaje de bienvenida
-print("📝 Neovim con Oil y Telescope cargado correctamente!")
+-- 🎉 Mensaje de bienvenida
+print("📝 Neovim con Oil, Telescope y LSP cargado correctamente!")
 print("⌨️  Usa Ctrl+S para guardar, Ctrl+A para seleccionar todo")
 print("🔍 Usa Space+ff para buscar archivos, Space+fg para buscar contenido")
 print("📁 Usa Ctrl+E para explorador de archivos")
+print("🖥️  Usa Space+t para terminal inferior")
+print("🔴 Los errores LSP se muestran en línea (como VS Code Error Lens)")
 print("📂 Directorio actual: " .. vim.fn.getcwd())
