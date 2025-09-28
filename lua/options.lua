@@ -7,18 +7,20 @@ vim.g.maplocalleader = " "
 
 -- 🖋️ Interfaz básica
 opt.number = true               -- números de línea
-opt.relativenumber = true       -- números relativos (útil para movimiento)
+opt.relativenumber = false      -- sin números relativos (más simple)
 opt.cursorline = true           -- resaltar línea actual
 opt.termguicolors = true        -- colores 24-bit
 opt.signcolumn = "yes"          -- columna para signos
 opt.scrolloff = 4               -- margen vertical
 opt.sidescrolloff = 8           -- margen horizontal
 
--- ⌨️ Edición
+-- ⌨️ Edición con 4 espacios
 opt.expandtab = true            -- usar espacios en vez de tabs
-opt.shiftwidth = 2              -- indentación de 2 espacios
-opt.tabstop = 2                 -- ancho del tab
+opt.shiftwidth = 4              -- indentación de 4 espacios
+opt.tabstop = 4                 -- ancho del tab = 4 espacios
+opt.softtabstop = 4             -- backspace elimina 4 espacios
 opt.smartindent = true          -- indentación inteligente
+opt.autoindent = true           -- mantener indentación
 opt.wrap = false                -- no dividir líneas largas
 
 -- 🔍 Búsqueda
@@ -34,6 +36,8 @@ opt.clipboard = "unnamedplus"   -- usar portapapeles del sistema
 opt.undofile = true             -- historial persistente de cambios
 opt.swapfile = false            -- desactivar archivos swap
 opt.backup = false              -- desactivar backups
+opt.autowrite = true            -- guardar automáticamente
+opt.autoread = true             -- recargar archivos cambiados
 
 -- ⚡ Rendimiento
 opt.updatetime = 250            -- tiempo de actualización
@@ -50,12 +54,12 @@ opt.mouse = "a"                 -- habilitar mouse en todos los modos
 opt.encoding = "utf-8"
 opt.fileencoding = "utf-8"
 
--- � Formato visual
+-- 📏 Formato visual
 opt.list = true
 opt.listchars = {
-  tab = "→ ",
-  trail = "·",
-  nbsp = "␣"
+  tab = "  ",                   -- tabs como dos espacios (mínimo requerido)
+  trail = "·",                  -- mostrar espacios al final
+  nbsp = "␣"                    -- mostrar espacios no separables
 }
 
 -- 🔔 Sin sonidos
@@ -64,4 +68,15 @@ opt.belloff = "all"
 -- 🎪 Windows específico
 if vim.fn.has("win32") == 1 then
   opt.shell = "pwsh.exe"
+  opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
+  opt.shellquote = ""
+  opt.shellxquote = ""
 end
+
+-- 🎨 Configuración adicional
+opt.showmode = true             -- mostrar el modo actual
+opt.showcmd = true              -- mostrar comandos parciales
+opt.ruler = true                -- mostrar posición del cursor
+opt.laststatus = 2              -- siempre mostrar statusline
+opt.completeopt = { "menu", "menuone", "noselect" }
+opt.pumheight = 15              -- máximo 15 elementos en menú
