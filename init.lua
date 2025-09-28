@@ -1105,10 +1105,130 @@ require("lazy").setup({
 				{ "<leader>r", group = "🔄 Refactor" },
 				{ "<leader>rn", desc = "Rename" },
 				
+				-- AI group
+				{ "<leader>a", group = "🤖 AI" },
+				{ "<leader>ac", desc = "Copilot Chat" },
+				{ "<leader>ae", desc = "Explain Code" },
+				{ "<leader>ar", desc = "Review Code" },
+				{ "<leader>at", desc = "Generate Tests" },
+				{ "<leader>af", desc = "Fix Code" },
+				
 				-- Single mappings
 				{ "<leader>l", desc = "🔴 Error Lines" },
 			})
 		end,
+	},
+
+	-- 🤖 GitHub Copilot - Versión Lua mejorada
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = function()
+			require("copilot").setup({
+				suggestion = {
+					enabled = true,
+					auto_trigger = true,
+					debounce = 75,
+					keymap = {
+						accept = "<Tab>",
+						accept_word = "<C-Right>",
+						accept_line = "<C-l>",
+						next = "<C-]>",
+						prev = "<C-[>",
+						dismiss = "<C-c>",
+					},
+				},
+				panel = {
+					enabled = true,
+					auto_refresh = false,
+					keymap = {
+						jump_prev = "[[",
+						jump_next = "]]",
+						accept = "<CR>",
+						refresh = "gr",
+						open = "<M-CR>"
+					},
+				},
+				filetypes = {
+					yaml = false,
+					markdown = false,
+					help = false,
+					gitcommit = false,
+					gitrebase = false,
+					hgcommit = false,
+					svn = false,
+					cvs = false,
+					["."] = false,
+				},
+			})
+		end,
+	},
+
+	-- 🤖 Copilot Chat - Chat con IA
+	{
+		"CopilotC-Nvim/CopilotChat.nvim",
+		branch = "canary",
+		dependencies = {
+			"zbirenbaum/copilot.lua",
+			"nvim-lua/plenary.nvim",
+		},
+		opts = {
+			debug = false,
+			window = {
+				layout = 'vertical',
+				width = 0.4,
+			},
+		},
+		keys = {
+			{
+				"<leader>ac",
+				function()
+					return require("CopilotChat").open()
+				end,
+				desc = "Copilot Chat",
+			},
+			{
+				"<leader>ae",
+				function()
+					local input = vim.fn.input("Ask Copilot: ")
+					if input ~= "" then
+						require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+					end
+				end,
+				desc = "Explain Code",
+			},
+			{
+				"<leader>ar",
+				function()
+					require("CopilotChat").ask("Review this code and suggest improvements", {
+						selection = require("CopilotChat.select").visual,
+					})
+				end,
+				mode = "v",
+				desc = "Review Code",
+			},
+			{
+				"<leader>at",
+				function()
+					require("CopilotChat").ask("Generate tests for this code", {
+						selection = require("CopilotChat.select").visual,
+					})
+				end,
+				mode = "v",
+				desc = "Generate Tests",
+			},
+			{
+				"<leader>af",
+				function()
+					require("CopilotChat").ask("Fix this code", {
+						selection = require("CopilotChat.select").visual,
+					})
+				end,
+				mode = "v",
+				desc = "Fix Code",
+			},
+		},
 	},
 }, {
 	-- Configuración de lazy.nvim

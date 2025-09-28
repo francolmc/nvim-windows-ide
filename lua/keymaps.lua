@@ -18,7 +18,7 @@ map("i", "<C-v>", '<C-r>+', opts)                     -- Ctrl+V: Pegar en modo i
 
 -- 🔍 Búsqueda básica
 map("n", "<C-f>", "/", { silent = false })            -- Ctrl+F: Buscar
-map("n", "<Esc>", ":nohlsearch<CR>", opts)            -- ESC: Limpiar resaltado de búsqueda
+map("n", "<leader>h", ":nohlsearch<CR>", opts)        -- Space+H: Limpiar resaltado de búsqueda
 
 -- 🧭 Navegación básica
 map("n", "<C-Home>", "gg", opts)                      -- Ctrl+Home: Ir al inicio
@@ -74,6 +74,21 @@ map("n", "]c", function() require('gitsigns').next_hunk() end, opts)            
 map("n", "<leader>gd", "<CMD>DiffviewOpen<CR>", opts)                            -- Space+gd: Abrir diff view
 map("n", "<leader>gh", "<CMD>DiffviewFileHistory<CR>", opts)                     -- Space+gh: Ver historial del archivo
 map("n", "<leader>gc", "<CMD>DiffviewClose<CR>", opts)                           -- Space+gc: Cerrar diff view
+
+-- 🤖 IA / Copilot keymaps (definidos en la configuración de CopilotChat)
+-- Space+ac: Abrir Copilot Chat
+-- Space+ae: Explicar código (Ask Copilot)
+-- Space+ar: Revisar código (solo en modo visual)
+-- Space+at: Generar tests (solo en modo visual)  
+-- Space+af: Arreglar código (solo en modo visual)
+
+-- Copilot suggestions keymaps (automáticos con copilot.lua):
+-- Tab: Aceptar sugerencia
+-- Ctrl+Right: Aceptar palabra
+-- Ctrl+L: Aceptar línea
+-- Ctrl+]: Siguiente sugerencia
+-- Ctrl+[: Sugerencia anterior
+-- Ctrl+C: Descartar sugerencia
 
 
 
