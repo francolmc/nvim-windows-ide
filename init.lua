@@ -14,6 +14,30 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+	-- 🎨 Temas Dark populares
+	{
+		"Mofiqul/vscode.nvim",
+		lazy = false,
+		priority = 1000,
+	},
+	{
+		"catppuccin/nvim", 
+		name = "catppuccin",
+		lazy = false,
+		priority = 1000,
+	},
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+	},
+	{
+		"rose-pine/neovim",
+		name = "rose-pine",
+		lazy = false,
+		priority = 1000,
+	},
+
 	-- 📁 Oil.nvim - navegador de archivos simple
 	{
 		"stevearc/oil.nvim",
@@ -118,7 +142,11 @@ require("lazy").setup({
 -- Keymaps básicos
 require("keymaps")
 
--- 🎉 Mensaje de bienvenida
+-- � Configurar tema (puedes cambiar aquí)
+-- Opciones: 'vscode', 'catppuccin', 'tokyonight', 'rose-pine'
+vim.cmd.colorscheme('vscode')  -- Cambia por el que prefieras
+
+-- �🎉 Mensaje de bienvenida
 print("📝 Neovim con Oil y Telescope cargado correctamente!")
 print("⌨️  Usa Ctrl+S para guardar, Ctrl+A para seleccionar todo")
 print("🔍 Usa Space+ff para buscar archivos, Space+fg para buscar contenido")
