@@ -2,6 +2,8 @@
 
 Una configuración de Neovim optimizada para Windows 11, diseñada para ser similar a VS Code pero más eficiente en el uso de batería.
 
+**Lenguajes soportados:** TypeScript, JavaScript, HTML, CSS, Python, Rust y Lua
+
 ## 📋 Requisitos Previos
 
 ### 🖥️ Sistema Operativo

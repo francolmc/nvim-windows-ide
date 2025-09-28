@@ -13,6 +13,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Suprimir warnings de lspconfig deprecation temporalmente
+vim.g.lspconfig_deprecation_warnings = false
+
 require("lazy").setup({
 	-- 🎨 Temas Dark populares
 	{
@@ -36,6 +39,255 @@ require("lazy").setup({
 		name = "rose-pine",
 		lazy = false,
 		priority = 1000,
+	},
+
+	-- 🧠 LSP y Autocompletado (SIN C - solo herramientas nativas)
+	{
+		"neovim/nvim-lspconfig",
+		dependencies = {
+			-- Mason - gestor de LSP servers (sin compilación C)
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+		},
+		config = function()
+			-- Configurar Mason primero
+			require("mason").setup({
+				ui = {
+					icons = {
+						package_installed = "✓",
+						package_pending = "➜",
+						package_uninstalled = "✗"
+					}
+				}
+			})
+
+			-- LSP servers que NO requieren compilación C
+			local servers = {
+				-- JavaScript/TypeScript (Node.js based)
+				"ts_ls",           -- TypeScript/JavaScript
+				"html",            -- HTML
+				"cssls",           -- CSS
+				"jsonls",          -- JSON
+				
+				-- Python (Python based)
+				"pylsp",           -- Python LSP (pure Python, no C)
+				
+				-- Lua (Lua based)
+				"lua_ls",          -- Lua
+				
+				-- Rust (Rust based - sin C dependencies)
+				"rust_analyzer",   -- Rust
+			}
+
+			require("mason-lspconfig").setup({
+				ensure_installed = servers,
+				automatic_installation = true,
+			})
+
+			-- Configurar cada LSP server
+			-- Las capabilities se configuran en nvim-cmp para mejor integración
+			local capabilities = vim.lsp.protocol.make_client_capabilities()
+			
+			-- Función común para configurar mapeos LSP
+			local function on_attach(client, bufnr)
+				local map = vim.keymap.set
+				local bufopts = { noremap = true, silent = true, buffer = bufnr }
+				
+				map('n', 'gd', vim.lsp.buf.definition, bufopts)
+				map('n', 'K', vim.lsp.buf.hover, bufopts)
+				map('n', 'gi', vim.lsp.buf.implementation, bufopts)
+				map('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+				map('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+				map('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+				map('n', 'gr', vim.lsp.buf.references, bufopts)
+				map('n', '<leader>f', function()
+					vim.lsp.buf.format { async = true }
+				end, bufopts)
+			end
+
+			-- Suprimir temporalmente warnings de deprecation
+			local old_notify = vim.notify
+			vim.notify = function(msg, level, opts)
+				if msg and msg:match("lspconfig.*deprecated") then
+					return
+				end
+				old_notify(msg, level, opts)
+			end
+
+			-- Configurar cada servidor
+			for _, server in ipairs(servers) do
+				local opts = {
+					capabilities = capabilities,
+					on_attach = on_attach,
+				}
+
+				-- Configuraciones específicas por servidor
+				if server == "lua_ls" then
+					opts.settings = {
+						Lua = {
+							runtime = { version = 'LuaJIT' },
+							diagnostics = { globals = {'vim'} },
+							workspace = {
+								library = vim.api.nvim_get_runtime_file("", true),
+								checkThirdParty = false,
+							},
+							telemetry = { enable = false },
+						},
+					}
+				elseif server == "ts_ls" then
+					opts.settings = {
+						typescript = {
+							inlayHints = {
+								includeInlayParameterNameHints = 'all',
+								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+								includeInlayFunctionParameterTypeHints = true,
+								includeInlayVariableTypeHints = true,
+								includeInlayPropertyDeclarationTypeHints = true,
+								includeInlayFunctionLikeReturnTypeHints = true,
+								includeInlayEnumMemberValueHints = true,
+							}
+						}
+					}
+				end
+
+				-- Usar lspconfig tradicional (funciona bien)
+				require("lspconfig")[server].setup(opts)
+			end
+
+			-- Restaurar vim.notify después de configurar LSP
+			vim.notify = old_notify
+		end,
+	},
+
+	-- 💬 Autocompletado nativo (sin cmp-nvim para evitar C)
+	{
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",     -- LSP source
+			"hrsh7th/cmp-buffer",       -- Buffer source
+			"hrsh7th/cmp-path",         -- Path source
+			"hrsh7th/cmp-cmdline",      -- Command line source
+			-- Snippets (SIN luasnip para evitar C)
+			"rafamadriz/friendly-snippets", -- Snippets collection
+			"saadparwaiz1/cmp_luasnip",     -- Snippet source
+			"L3MON4D3/LuaSnip",             -- Snippet engine (pure Lua)
+		},
+		config = function()
+			local cmp = require("cmp")
+			local luasnip = require("luasnip")
+
+			-- Cargar snippets
+			require("luasnip.loaders.from_vscode").lazy_load()
+
+			-- Configurar capabilities para LSP
+			local capabilities = require('cmp_nvim_lsp').default_capabilities()
+			
+			-- Actualizar capabilities en lspconfig si ya está configurado
+			if package.loaded['lspconfig'] then
+				for _, server in ipairs({'lua_ls', 'ts_ls', 'html', 'cssls', 'jsonls', 'pylsp', 'rust_analyzer'}) do
+					if package.loaded['lspconfig'][server] then
+						require('lspconfig')[server].setup({ capabilities = capabilities })
+					end
+				end
+			end
+
+			cmp.setup({
+				snippet = {
+					expand = function(args)
+						luasnip.lsp_expand(args.body)
+					end,
+				},
+				window = {
+					completion = cmp.config.window.bordered(),
+					documentation = cmp.config.window.bordered(),
+				},
+				mapping = cmp.mapping.preset.insert({
+					['<C-b>'] = cmp.mapping.scroll_docs(-4),
+					['<C-f>'] = cmp.mapping.scroll_docs(4),
+					['<C-Space>'] = cmp.mapping.complete(),
+					['<C-e>'] = cmp.mapping.abort(),
+					['<CR>'] = cmp.mapping.confirm({ select = true }),
+					['<Tab>'] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_next_item()
+						elseif luasnip.expand_or_jumpable() then
+							luasnip.expand_or_jump()
+						else
+							fallback()
+						end
+					end, { 'i', 's' }),
+					['<S-Tab>'] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_prev_item()
+						elseif luasnip.jumpable(-1) then
+							luasnip.jump(-1)
+						else
+							fallback()
+						end
+					end, { 'i', 's' }),
+				}),
+				sources = cmp.config.sources({
+					{ name = 'nvim_lsp' },    -- LSP
+					{ name = 'luasnip' },     -- Snippets
+				}, {
+					{ name = 'buffer' },      -- Buffer actual
+					{ name = 'path' },        -- Rutas de archivos
+				}),
+				-- Iconos para el autocompletado
+				formatting = {
+					format = function(entry, vim_item)
+						-- Iconos para diferentes tipos
+						local icons = {
+							Text = "󰉿",
+							Method = "󰆧",
+							Function = "󰊕",
+							Constructor = "",
+							Field = "󰜢",
+							Variable = "󰀫",
+							Class = "󰠱",
+							Interface = "",
+							Module = "",
+							Property = "󰜢",
+							Unit = "󰑭",
+							Value = "󰎠",
+							Enum = "",
+							Keyword = "󰌋",
+							Snippet = "",
+							Color = "󰏘",
+							File = "󰈙",
+							Reference = "󰈇",
+							Folder = "󰉋",
+							EnumMember = "",
+							Constant = "󰏿",
+							Struct = "󰙅",
+							Event = "",
+							Operator = "󰆕",
+							TypeParameter = "",
+						}
+						vim_item.kind = string.format('%s %s', icons[vim_item.kind] or "", vim_item.kind)
+						return vim_item
+					end
+				}
+			})
+
+			-- Autocompletado para búsqueda
+			cmp.setup.cmdline('/', {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = {
+					{ name = 'buffer' }
+				}
+			})
+
+			-- Autocompletado para comandos
+			cmp.setup.cmdline(':', {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+					{ name = 'path' }
+				}, {
+					{ name = 'cmdline' }
+				})
+			})
+		end,
 	},
 
 	-- 📁 Oil.nvim - navegador de archivos simple
