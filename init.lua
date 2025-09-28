@@ -718,7 +718,8 @@ require("lazy").setup({
 		end,
 	},
 
-	-- 📁 Oil.nvim - navegador de archivos simple
+	-- � Which Key - Mostrar keymaps disponibles (como VS Code Command Palette)
+	-- �📁 Oil.nvim - navegador de archivos simple
 	{
 		"stevearc/oil.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -1036,6 +1037,76 @@ require("lazy").setup({
 						return icon .. diagnostic.message
 					end,
 				},
+			})
+		end,
+	},
+
+	-- Which Key - Mostrar keymaps disponibles
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- Configuración según la documentación oficial v3
+			preset = "classic",
+			icons = { 
+				mappings = false,  -- Deshabilitar iconos automáticos
+			},
+			win = { 
+				border = "rounded",
+				padding = { 1, 2 },
+			},
+			-- No más plugins deprecados o configuraciones antiguas
+		},
+		keys = {
+			{
+				"<leader>?",
+				function()
+					require("which-key").show({ global = false })
+				end,
+				desc = "Buffer Local Keymaps (which-key)",
+			},
+		},
+		config = function()
+			local wk = require("which-key")
+			
+			-- Registrar keymaps usando wk.add (sintaxis v3)
+			wk.add({
+				-- Find group
+				{ "<leader>f", group = "🔍 Find" },
+				{ "<leader>ff", desc = "Find Files" },
+				{ "<leader>fg", desc = "Live Grep" },
+				{ "<leader>fb", desc = "Buffers" },
+				{ "<leader>fh", desc = "Help" },
+				
+				-- Git group
+				{ "<leader>g", group = "🌿 Git" },
+				{ "<leader>gb", desc = "Blame" },
+				{ "<leader>gp", desc = "Preview Hunk" },
+				{ "<leader>gr", desc = "Reset Hunk" },
+				{ "<leader>gd", desc = "Diff View" },
+				{ "<leader>gh", desc = "History" },
+				{ "<leader>gc", desc = "Close Diff" },
+				
+				-- Terminal group
+				{ "<leader>t", group = "🖥️ Terminal" },
+				{ "<leader>tt", desc = "Toggle" },
+				{ "<leader>tf", desc = "Float" },
+				
+				-- Notifications group
+				{ "<leader>n", group = "🔔 Notify" },
+				{ "<leader>nd", desc = "Dismiss" },
+				{ "<leader>nh", desc = "History" },
+				
+				-- Code group
+				{ "<leader>c", group = "🔧 Code" },
+				{ "<leader>ca", desc = "Action" },
+				
+				-- Refactor group
+				{ "<leader>r", group = "🔄 Refactor" },
+				{ "<leader>rn", desc = "Rename" },
+				
+				-- Single mappings
+				{ "<leader>l", desc = "🔴 Error Lines" },
 			})
 		end,
 	},
