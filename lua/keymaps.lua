@@ -61,5 +61,19 @@ map("n", "<leader>fh", "<CMD>Telescope help_tags<CR>", opts)    -- Space+fh: Bus
 map('n', '<leader>t', "<CMD>ToggleTerm<CR>", opts)       -- Space+t: toggle bottom terminal
 map('n', '<leader>tf', "<CMD>ToggleTermToggleAll<CR>", opts) -- Space+tf: toggle floating terminals
 
+-- 🔔 Notificaciones
+map("n", "<leader>nd", function() require('notify').dismiss() end, opts)  -- Space+nd: Descartar notificaciones
+map("n", "<leader>nh", "<CMD>Notifications<CR>", opts)                    -- Space+nh: Ver historial de notificaciones
+
+-- 🌿 Git - Información y navegación (solo lectura)
+map("n", "<leader>gb", "<CMD>GitBlameToggle<CR>", opts)                   -- Space+gb: Toggle git blame
+map("n", "<leader>gp", function() require('gitsigns').preview_hunk() end, opts)  -- Space+gp: Preview cambios del hunk
+map("n", "<leader>gr", function() require('gitsigns').reset_hunk() end, opts)    -- Space+gr: Reset hunk (solo para info)
+map("n", "[c", function() require('gitsigns').prev_hunk() end, opts)             -- [c: Ir al hunk anterior
+map("n", "]c", function() require('gitsigns').next_hunk() end, opts)             -- ]c: Ir al siguiente hunk
+map("n", "<leader>gd", "<CMD>DiffviewOpen<CR>", opts)                            -- Space+gd: Abrir diff view
+map("n", "<leader>gh", "<CMD>DiffviewFileHistory<CR>", opts)                     -- Space+gh: Ver historial del archivo
+map("n", "<leader>gc", "<CMD>DiffviewClose<CR>", opts)                           -- Space+gc: Cerrar diff view
+
 
 
