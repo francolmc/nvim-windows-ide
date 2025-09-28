@@ -170,7 +170,7 @@ require("lazy").setup({
 				},
 				-- Integración con syntax highlighting
 				highlight_groups = {
-					TSKeyword = { fg = 'pine', style = 'italic' },
+					TSKeyword = { fg = 'pine', italic = true },
 					TSFunction = { fg = 'foam' },
 					TSString = { fg = 'gold' },
 					TSNumber = { fg = 'iris' },
@@ -455,12 +455,6 @@ require("lazy").setup({
 	},
 	{
 		"folke/tokyonight.nvim",
-		lazy = false,
-		priority = 1000,
-	},
-	{
-		"rose-pine/neovim",
-		name = "rose-pine",
 		lazy = false,
 		priority = 1000,
 	},
@@ -1067,7 +1061,7 @@ vim.cmd([[
 
 -- 🎨 Configurar tema (puedes cambiar aquí)
 -- Opciones: 'vscode', 'catppuccin', 'tokyonight', 'rose-pine'
-vim.cmd.colorscheme('vscode')  -- Cambia por el que prefieras
+vim.cmd.colorscheme('rose-pine')  -- Cambia por el que prefieras
 
 -- 🎉 Mensaje de bienvenida
 print("📝 Neovim con Oil, Telescope y LSP cargado correctamente!")
