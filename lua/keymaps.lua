@@ -47,3 +47,15 @@ map("n", "<leader>E", function()                      -- Space+E (mayúscula): O
   require("oil").open_float()
 end, opts)
 
+-- 🔍 Telescope - Buscador tipo VS Code
+map("n", "<leader>ff", function()
+  require("telescope.builtin").find_files()
+end, opts)                                                      -- Space+ff: Buscar archivos
+map("n", "<leader>fg", function()
+  require("telescope.builtin").live_grep()
+end, opts)                                                      -- Space+fg: Buscar en contenido
+map("n", "<leader>fb", "<CMD>Telescope buffers<CR>", opts)      -- Space+fb: Buscar buffers
+map("n", "<leader>fh", "<CMD>Telescope help_tags<CR>", opts)    -- Space+fh: Buscar ayuda
+
+
+
