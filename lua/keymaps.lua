@@ -57,5 +57,9 @@ end, opts)                                                      -- Space+fg: Bus
 map("n", "<leader>fb", "<CMD>Telescope buffers<CR>", opts)      -- Space+fb: Buscar buffers
 map("n", "<leader>fh", "<CMD>Telescope help_tags<CR>", opts)    -- Space+fh: Buscar ayuda
 
+-- Terminal toggles (toggleterm)
+map('n', '<leader>t', "<CMD>ToggleTerm<CR>", opts)       -- Space+t: toggle bottom terminal
+map('n', '<leader>tf', "<CMD>ToggleTermToggleAll<CR>", opts) -- Space+tf: toggle floating terminals
+
 
 

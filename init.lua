@@ -375,6 +375,52 @@ require("lazy").setup({
 			})
 		end
 	},
+
+	-- 📊 Statusline - lualine (pure Lua) - configuración simplificada
+	{
+		"nvim-lualine/lualine.nvim",
+		lazy = false,
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			-- Configuración mínima sin secciones complejas
+			local ok, lualine = pcall(require, 'lualine')
+			if ok then
+				lualine.setup({
+					options = {
+						theme = 'auto',
+						section_separators = '',
+						component_separators = '',
+						disabled_filetypes = {},
+						globalstatus = false,
+					},
+					sections = {
+						lualine_a = {'mode'},
+						lualine_b = {'branch'},
+						lualine_c = {'filename'},
+						lualine_x = {'filetype'},
+						lualine_y = {'progress'},
+						lualine_z = {'location'}
+					},
+				})
+			end
+		end,
+	},
+
+	-- 🖥️ Terminal inferior - toggleterm
+	{
+		"akinsho/toggleterm.nvim",
+		version = "*",
+		config = function()
+			require('toggleterm').setup{
+				size = 20,
+				autostart = false,
+				open_mapping = false,
+				shade_terminals = true,
+				direction = 'horizontal', -- bottom panel
+				float_opts = { border = 'curved' },
+			}
+		end,
+	},
 }, {
 	-- Configuración de lazy.nvim
 	defaults = {
