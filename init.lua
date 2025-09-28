@@ -180,7 +180,12 @@ require("lazy").setup({
 		end,
 	},
 
-	-- 🌿 Git Signs - Información visual de Git (como VS Code)
+	-- � Rainbow Brackets - Resaltado de paréntesis/llaves (SIN C)
+	{
+
+	},
+
+	-- �🌿 Git Signs - Información visual de Git (como VS Code)
 	{
 		"lewis6991/gitsigns.nvim",
 		config = function()
@@ -1057,6 +1062,19 @@ require("keymaps")
 vim.cmd([[
 	syntax enable
 	filetype plugin indent on
+]])
+
+-- Configuración adicional para mejor resaltado (usando vim.cmd con sintaxis correcta)
+-- Mejorar visibilidad de paréntesis emparejados (nativo de Vim)
+vim.opt.showmatch = true
+vim.opt.matchtime = 2
+
+-- Mejores colores para delimitadores usando grupos existentes
+vim.cmd([[
+	highlight MatchParen guifg=#E06C75 guibg=#3B4048 gui=bold
+	highlight Delimiter guifg=#ABB2BF
+	highlight Operator guifg=#C678DD
+	highlight Special guifg=#61AFEF
 ]])
 
 -- 🎨 Configurar tema (puedes cambiar aquí)
