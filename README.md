@@ -5,7 +5,9 @@
 [![Neovim](https://img.shields.io/badge/Neovim-0.10+-green.svg)](https://neovim.io/)
 [![Windows](https://img.shields.io/badge/Windows-11-blue.svg)](https://www.microsoft.com/windows/)
 [![Lua](https://img.shields.io/badge/Config-Lua-purple.svg)](https://lua.org/)
-[![Battery](https://img.shields### 📚 Documentación
+[![Battery](https://img.shields.io/badge/Battery-100%25-green)](https://example.com)
+
+### 📚 Documentación
 - [ ] **Video Tutorials**: Tutoriales en video
 - [ ] **Cheat Sheet**: Hoja de referencia rápida
 - [ ] **Migration Guide**: Guía desde VS Code
