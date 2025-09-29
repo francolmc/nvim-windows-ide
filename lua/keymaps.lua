@@ -93,6 +93,33 @@ map("n", "<leader>gd", "<CMD>DiffviewOpen<CR>", opts)                           
 map("n", "<leader>gh", "<CMD>DiffviewFileHistory<CR>", opts)                     -- Space+gh: Ver historial del archivo
 map("n", "<leader>gc", "<CMD>DiffviewClose<CR>", opts)                           -- Space+gc: Cerrar diff view
 
+-- 🤖 IA Agéntica - Autocompletado y Comandos Avanzados
+
+-- AUTOCOMPLETADO AUTOMÁTICO (como VS Code):
+-- Tab: Aceptar sugerencia de Copilot (prioridad) o navegar autocompletado
+-- Shift+Tab: Sugerencia anterior de Copilot
+-- Ctrl+Right: Aceptar solo una palabra de la sugerencia
+-- Ctrl+Down: Aceptar solo una línea de la sugerencia
+-- Alt+]: Siguiente sugerencia alternativa
+-- Alt+[: Sugerencia anterior alternativa
+-- Ctrl+C: Rechazar sugerencia
+
+-- Comandos de chat y análisis:
+-- Space+ac: Chat, Space+ae: Explicar, Space+ar: Review, Space+at: Tests, Space+af: Fix
+
+-- Comandos agénticos avanzados (requieren selección visual):
+-- Space+ao: Optimizar código para rendimiento
+-- Space+ad: Generar documentación completa
+-- Space+as: Análisis de seguridad
+-- Space+ap: Aplicar mejores prácticas por lenguaje
+-- Space+ai: Mejorar manejo de errores
+-- Space+aa: Análisis completo del archivo (sin selección)
+
+-- GENERACIÓN DE ARCHIVOS Y CÓDIGO:
+-- Space+acf: Crear archivo completo con IA (pide nombre y descripción)
+-- Space+acg: Generar componente/función (pide tipo, nombre y specs)
+-- ¡Los archivos se crean automáticamente con el código generado!
+
 -- 🤖 IA / Copilot keymaps (definidos en la configuración de CopilotChat)
 -- Space+ac: Abrir Copilot Chat
 -- Space+ae: Explicar código (Ask Copilot)

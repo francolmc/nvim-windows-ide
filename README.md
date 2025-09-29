@@ -211,14 +211,114 @@ nvim
 | `Ctrl+`` | Terminal rápida | Atajo directo |
 | `Esc` | Salir terminal | Volver a normal |
 
-### 🤖 Inteligencia Artificial (Space + a)
+### 🤖 Inteligencia Artificial Agéntica
+
+#### ⚡ Autocompletado Automático (como VS Code)
 | Atajo | Acción | Descripción |
 |-------|---------|-------------|
-| `Space ac` | Copilot Chat | Chat interactivo |
+| `Tab` | Aceptar sugerencia | Acepta sugerencia completa de Copilot |
+| `Shift+Tab` | Sugerencia anterior | Navega sugerencias alternativas |
+| `Ctrl+Right` | Aceptar palabra | Solo acepta una palabra |
+| `Ctrl+Down` | Aceptar línea | Solo acepta una línea |
+| `Alt+]` | Siguiente sugerencia | Alterna entre opciones |
+| `Alt+[` | Sugerencia anterior | Alterna hacia atrás |
+| `Ctrl+C` | Rechazar | Oculta sugerencia actual |
+
+#### 💬 Comandos de Chat
+| Atajo | Acción | Descripción |
+|-------|---------|-------------|
+| `Space ac` | Copilot Chat | Chat interactivo libre |
 | `Space ae` | Explicar código | Explicar selección |
-| `Space ar` | Revisar código | Code review |
-| `Space at` | Generar tests | Crear tests |
-| `Space af` | Arreglar código | Fix automático |
+
+#### 🔍 Análisis y Review  
+| Atajo | Acción | Descripción |
+|-------|---------|-------------|
+| `Space ar` | Code Review | Revisión completa |
+| `Space aa` | Análisis Completo | Análisis profundo del archivo |
+| `Space as` | Security Analysis | Análisis de seguridad |
+
+#### 🛠️ Generación y Mejoras
+| Atajo | Acción | Descripción |
+|-------|---------|-------------|
+| `Space at` | Generar Tests | Tests comprehensivos |
+| `Space af` | Fix Code | Correcciones automáticas |
+| `Space ao` | Optimize | Optimizar rendimiento |
+| `Space ap` | Best Practices | Aplicar mejores prácticas |
+
+#### 📚 Documentación y Calidad
+| Atajo | Acción | Descripción |
+|-------|---------|-------------|
+| `Space ad` | Documentation | JSDoc/docstrings completos |
+| `Space ai` | Error Handling | Mejorar manejo de errores |
+
+#### 🏗️ Generación de Archivos y Código
+| Atajo | Acción | Descripción |
+|-------|---------|-------------|
+| `Space acf` | Create File | Crear archivo completo con IA |
+| `Space acg` | Generate Component | Generar componente/función |
+
+> **💡 Modo Agéntico:** Los comandos analizan contexto, entienden el lenguaje, y generan respuestas especializadas automáticamente.
+
+> **🔥 Generación Automática:** Los comandos `acf` y `acg` crean archivos reales y insertan código automáticamente.
+
+### 🚀 Cómo Usar el Autocompletado IA
+
+#### ✨ **Experiencia VS Code Idéntica**
+1. **Empieza a escribir** - Las sugerencias aparecen automáticamente en gris
+2. **Presiona Tab** - Acepta la sugerencia completa
+3. **Sigue escribiendo** - Más sugerencias aparecen contextualmente
+
+#### 🎯 **Ejemplos Prácticos**
+```javascript
+// Escribes: "function fetchUser"
+// Copilot sugiere: "function fetchUserData(userId) { return fetch(`/api/users/${userId}`).then(res => res.json()); }"
+// Presionas Tab → ¡Código completo!
+
+// Escribes: "// Create a React component for"
+// Copilot sugiere: componente completo con useState, props, JSX
+// Presionas Tab → ¡Componente listo!
+```
+
+#### 🔥 **Capacidades Avanzadas**
+- **Funciones completas** - Escribe nombre, get implementación
+- **Patrones comunes** - Loops, validaciones, error handling
+- **Framework specific** - React hooks, Python decorators, Rust macros
+- **Tests automáticos** - Escribe test name, get implementation
+- **Documentación** - Comments se expanden a docs completas
+
+### 🏗️ Generación de Archivos Completos
+
+#### 📄 **Crear Archivos con IA (`Space acf`)**
+1. **Presiona `Space acf`**
+2. **Ingresa nombre**: `UserService.ts`
+3. **Describe funcionalidad**: "Service for user authentication with JWT, login, logout, and token refresh"
+4. **¡Archivo creado automáticamente!** Con código completo, tipos, imports, y documentación
+
+#### 🧩 **Generar Componentes (`Space acg`)**
+1. **Presiona `Space acg`**
+2. **Tipo**: `React`
+3. **Nombre**: `UserProfile`
+4. **Specs**: "Display user info with avatar, edit mode, and validation"
+5. **¡Código insertado en cursor!** Componente completo con hooks, props, styles
+
+#### 🎯 **Ejemplos de Generación:**
+
+**Crear API Service:**
+```
+Comando: Space acf
+Nombre: api/userService.js
+Descripción: RESTful service for user CRUD operations with error handling
+→ Genera archivo completo con fetch, error handling, types
+```
+
+**Generar React Hook:**
+```
+Comando: Space acg
+Tipo: React Hook
+Nombre: useLocalStorage
+Specs: Custom hook for localStorage with JSON serialization
+→ Inserta hook completo con TypeScript, error handling
+```
 
 ### 🌳 Git Integration (Space + g)
 | Atajo | Acción | Descripción |
@@ -313,12 +413,17 @@ vim.cmd.colorscheme('vscode')  -- Cambiar por el tema deseado
 - **✅ Formateo**: Automático al guardar
 - **✅ Snippets**: LuaSnip con librerías incluidas
 
-### 🤖 Inteligencia Artificial
-- **✅ GitHub Copilot**: Sugerencias de código IA
-- **✅ Chat Interactivo**: Conversaciones con Copilot
-- **✅ Code Review**: Análisis automático de código
-- **✅ Test Generation**: Generación de tests
-- **✅ Code Explanation**: Explicaciones detalladas
+### 🤖 Inteligencia Artificial Agéntica
+- **✅ Autocompletado Automático**: Como VS Code, presiona Tab y escribe IA
+- **✅ Sugerencias Contextuales**: Líneas completas, funciones, patrones
+- **✅ Multi-línea Inteligente**: Genera bloques completos de código
+- **✅ Chat Interactivo**: Conversaciones especializadas
+- **✅ Análisis Inteligente**: Review automático con contexto
+- **✅ Generación Especializada**: Tests, docs, optimizaciones
+- **✅ Security Analysis**: Detección de vulnerabilidades
+- **✅ Best Practices**: Aplicación automática por lenguaje
+- **✅ Error Handling**: Mejoras inteligentes de manejo de errores
+- **✅ Performance Optimization**: Sugerencias de rendimiento
 
 ### 🌳 Git Workflow
 - **✅ Indicators**: Cambios en tiempo real

@@ -641,7 +641,11 @@ require("lazy").setup({
 					['<C-e>'] = cmp.mapping.abort(),
 					['<CR>'] = cmp.mapping.confirm({ select = true }),
 					['<Tab>'] = cmp.mapping(function(fallback)
-						if cmp.visible() then
+						-- Primero revisar si hay sugerencia de Copilot
+						local copilot_suggestion = require("copilot.suggestion")
+						if copilot_suggestion.is_visible() then
+							copilot_suggestion.accept()
+						elseif cmp.visible() then
 							cmp.select_next_item()
 						elseif luasnip.expand_or_jumpable() then
 							luasnip.expand_or_jump()
@@ -650,7 +654,11 @@ require("lazy").setup({
 						end
 					end, { 'i', 's' }),
 					['<S-Tab>'] = cmp.mapping(function(fallback)
-						if cmp.visible() then
+						-- Shift+Tab para sugerencia anterior de Copilot
+						local copilot_suggestion = require("copilot.suggestion")
+						if copilot_suggestion.is_visible() then
+							copilot_suggestion.prev()
+						elseif cmp.visible() then
 							cmp.select_prev_item()
 						elseif luasnip.jumpable(-1) then
 							luasnip.jump(-1)
@@ -1134,14 +1142,14 @@ require("lazy").setup({
 				suggestion = {
 					enabled = true,
 					auto_trigger = true,
-					debounce = 75,
+					debounce = 50,  -- Más rápido que VS Code
 					keymap = {
-						accept = "<Tab>",
-						accept_word = "<C-Right>",
-						accept_line = "<C-l>",
-						next = "<C-]>",
-						prev = "<C-[>",
-						dismiss = "<C-c>",
+						accept = "<Tab>",           -- Tab para aceptar (como VS Code)
+						accept_word = "<C-Right>",  -- Ctrl+Right para aceptar palabra
+						accept_line = "<C-Down>",   -- Ctrl+Down para aceptar línea
+						next = "<M-]>",            -- Alt+] siguiente sugerencia
+						prev = "<M-[>",            -- Alt+[ sugerencia anterior
+						dismiss = "<C-c>",         -- Ctrl+C para rechazar
 					},
 				},
 				panel = {
@@ -1156,6 +1164,18 @@ require("lazy").setup({
 					},
 				},
 				filetypes = {
+					-- Habilitar para desarrollo
+					javascript = true,
+					typescript = true,
+					typescriptreact = true,
+					javascriptreact = true,
+					python = true,
+					rust = true,
+					lua = true,
+					html = true,
+					css = true,
+					json = true,
+					-- Deshabilitar para archivos de configuración
 					yaml = false,
 					markdown = false,
 					help = false,
@@ -1183,6 +1203,39 @@ require("lazy").setup({
 			window = {
 				layout = 'vertical',
 				width = 0.4,
+				height = 0.6,
+			},
+			-- Configuración para generación de archivos
+			selection = function(source)
+				return require("CopilotChat.select").visual(source) or require("CopilotChat.select").buffer(source)
+			end,
+			-- Prompts personalizados para generación
+			prompts = {
+				CreateFile = {
+					prompt = "Create a new file with the following specifications. Include the full file content with proper structure, imports, and documentation:",
+					mapping = "<leader>acf",
+					description = "Create new file",
+				},
+				GenerateComponent = {
+					prompt = "Generate a complete component/module based on the description. Include all necessary imports, types, and documentation:",
+					mapping = "<leader>acg",
+					description = "Generate component",
+				},
+				RefactorCode = {
+					prompt = "Refactor the selected code to improve structure, performance, and maintainability. Provide the complete refactored version:",
+					mapping = "<leader>acr",
+					description = "Refactor code",
+				},
+				CreateTests = {
+					prompt = "Generate comprehensive tests for the selected code. Include unit tests, edge cases, and mocks if needed:",
+					mapping = "<leader>act",
+					description = "Create tests",
+				},
+				GenerateSchema = {
+					prompt = "Generate database schema, API schema, or type definitions based on the description:",
+					mapping = "<leader>acs",
+					description = "Generate schema",
+				},
 			},
 		},
 		keys = {
@@ -1232,6 +1285,138 @@ require("lazy").setup({
 				end,
 				mode = "v",
 				desc = "Fix Code",
+			},
+			-- 🤖 Comandos Agénticos Avanzados
+			{
+				"<leader>ao",
+				function()
+					require("CopilotChat").ask("Optimize this code for better performance and readability", {
+						selection = require("CopilotChat.select").visual,
+					})
+				end,
+				mode = "v",
+				desc = "Optimize Code",
+			},
+			{
+				"<leader>ad",
+				function()
+					require("CopilotChat").ask("Generate comprehensive documentation for this code including JSDoc/docstrings", {
+						selection = require("CopilotChat.select").visual,
+					})
+				end,
+				mode = "v",
+				desc = "Document Code",
+			},
+			{
+				"<leader>as",
+				function()
+					require("CopilotChat").ask("Analyze this code for security vulnerabilities and suggest fixes", {
+						selection = require("CopilotChat.select").visual,
+					})
+				end,
+				mode = "v",
+				desc = "Security Analysis",
+			},
+			{
+				"<leader>ap",
+				function()
+					local filetype = vim.bo.filetype
+					require("CopilotChat").ask("Convert this code to follow " .. filetype .. " best practices and modern patterns", {
+						selection = require("CopilotChat.select").visual,
+					})
+				end,
+				mode = "v",
+				desc = "Apply Best Practices",
+			},
+			{
+				"<leader>ai",
+				function()
+					require("CopilotChat").ask("Add comprehensive error handling and input validation to this code", {
+						selection = require("CopilotChat.select").visual,
+					})
+				end,
+				mode = "v",
+				desc = "Improve Error Handling",
+			},
+			-- 🔍 Comandos de Análisis Completo
+			{
+				"<leader>aa",
+				function()
+					require("CopilotChat").ask("Perform a complete code analysis: review logic, suggest optimizations, identify potential bugs, and recommend improvements", {
+						selection = require("CopilotChat.select").buffer,
+					})
+				end,
+				desc = "Complete Analysis",
+			},
+			-- 📄 Comandos de Generación de Archivos y Código
+			{
+				"<leader>acf",
+				function()
+					local filename = vim.fn.input("Filename to create: ")
+					local description = vim.fn.input("File description: ")
+					if filename ~= "" and description ~= "" then
+						require("CopilotChat").ask("Create a new file named '" .. filename .. "' with the following specifications: " .. description .. 
+							". Include the complete file content with proper structure, imports, exports, documentation, and follow best practices for the file type.", {
+							callback = function(response)
+								-- Crear el archivo con el contenido generado
+								local lines = vim.split(response, '\n')
+								-- Filtrar líneas de código (quitar markdown)
+								local code_lines = {}
+								local in_code_block = false
+								for _, line in ipairs(lines) do
+									if line:match("```") then
+										in_code_block = not in_code_block
+									elseif in_code_block then
+										table.insert(code_lines, line)
+									end
+								end
+								-- Si no hay bloque de código, usar todo el response
+								if #code_lines == 0 then
+									code_lines = lines
+								end
+								-- Escribir archivo
+								vim.fn.writefile(code_lines, filename)
+								vim.cmd("edit " .. filename)
+								print("✅ File created: " .. filename)
+							end
+						})
+					end
+				end,
+				desc = "Create File with AI",
+			},
+			{
+				"<leader>acg",
+				function()
+					local component_type = vim.fn.input("Component type (React/Vue/Function/Class): ")
+					local component_name = vim.fn.input("Component name: ")
+					local specs = vim.fn.input("Component specifications: ")
+					if component_type ~= "" and component_name ~= "" then
+						require("CopilotChat").ask("Generate a complete " .. component_type .. " component named '" .. component_name .. "' with these specifications: " .. specs .. 
+							". Include all necessary imports, types, props, state management, error handling, and comprehensive documentation.", {
+							callback = function(response)
+								-- Insertar el código generado en el buffer actual
+								local lines = vim.split(response, '\n')
+								local code_lines = {}
+								local in_code_block = false
+								for _, line in ipairs(lines) do
+									if line:match("```") then
+										in_code_block = not in_code_block
+									elseif in_code_block then
+										table.insert(code_lines, line)
+									end
+								end
+								if #code_lines == 0 then
+									code_lines = lines
+								end
+								-- Insertar en cursor actual
+								local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+								vim.api.nvim_buf_set_lines(0, row, row, false, code_lines)
+								print("✅ Component generated: " .. component_name)
+							end
+						})
+					end
+				end,
+				desc = "Generate Component",
 			},
 		},
 	},
