@@ -1168,7 +1168,7 @@ require("lazy").setup({
 	-- 🤖 Copilot Chat - Chat con IA
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
-		branch = "canary",
+		branch = "main",
 		dependencies = {
 			"zbirenbaum/copilot.lua",
 			"nvim-lua/plenary.nvim",
