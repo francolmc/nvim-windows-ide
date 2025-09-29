@@ -39,7 +39,7 @@
 - [ ] **Extension API**: API para plugins personalizados
 - [ ] **Cloud Sync**: Sincronización en la nube
 
-## 🤝 Contribuire/Battery-Optimized-brightgreen.svg)](#)
+## 🤝 Contribuire [![Battery Optimized](https://img.shields.io/badge/Battery-Optimized-brightgreen.svg)](#)
 
 ## ✨ Características Principales
 
