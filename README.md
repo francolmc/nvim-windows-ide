@@ -216,13 +216,13 @@ nvim
 #### ⚡ Autocompletado Automático (como VS Code)
 | Atajo | Acción | Descripción |
 |-------|---------|-------------|
-| `Tab` | Aceptar sugerencia | Acepta sugerencia completa de Copilot |
+| `Tab` | Aceptar sugerencia **o indentar** | Acepta Copilot o indenta si no hay sugerencias |
 | `Shift+Tab` | Sugerencia anterior | Navega sugerencias alternativas |
 | `Ctrl+Right` | Aceptar palabra | Solo acepta una palabra |
 | `Ctrl+Down` | Aceptar línea | Solo acepta una línea |
-| `Alt+]` | Siguiente sugerencia | Alterna entre opciones |
-| `Alt+[` | Sugerencia anterior | Alterna hacia atrás |
+| `Alt+]` / `Alt+[` | Navegar sugerencias | Alterna entre opciones |
 | `Ctrl+C` | Rechazar | Oculta sugerencia actual |
+| `Escape` | Salir modo inserción | Funciona siempre para salir de edición |
 
 #### 💬 Comandos de Chat
 | Atajo | Acción | Descripción |
@@ -510,6 +510,8 @@ winget install BurntSushi.ripgrep.MSVC sharkdp.fd
 
 | Error | Solución |
 |-------|----------|
+| `Escape no funciona` | Escape está mapeado explícitamente para salir de modos |
+| `Tab no indenta` | Tab prioriza Copilot, pero indenta cuando no hay sugerencias |
 | `Plugin not found` | Ejecutar `:Lazy sync` |
 | `LSP not working` | Verificar `:Mason` y `:LspInfo` |
 | `Copilot not responding` | Ejecutar `:Copilot auth` |

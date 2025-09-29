@@ -650,7 +650,17 @@ require("lazy").setup({
 						elseif luasnip.expand_or_jumpable() then
 							luasnip.expand_or_jump()
 						else
-							fallback()
+							-- Permitir indentación normal cuando no hay sugerencias
+							local col = vim.fn.col('.')
+							local line = vim.fn.getline('.')
+							local before_cursor = line:sub(1, col - 1)
+
+							-- Si estamos al inicio de línea o después de espacios, indentar
+							if col == 1 or before_cursor:match('^%s*$') then
+								vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Tab>', true, false, true), 'n', false)
+							else
+								fallback()
+							end
 						end
 					end, { 'i', 's' }),
 					['<S-Tab>'] = cmp.mapping(function(fallback)

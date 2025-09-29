@@ -26,6 +26,10 @@ map("n", "<C-End>", "G", opts)                        -- Ctrl+End: Ir al final
 map("n", "<Home>", "^", opts)                         -- Home: Ir al inicio de línea (sin espacios)
 map("n", "<End>", "$", opts)                          -- End: Ir al final de línea
 
+-- ⌨️ Edición básica - Asegurar que Escape funcione correctamente
+map("i", "<Esc>", "<Esc>", { silent = true })         -- Escape: Salir del modo inserción (explícito)
+map("v", "<Esc>", "<Esc>", { silent = true })         -- Escape: Salir del modo visual (explícito)
+
 -- ⌨️ Edición básica
 map("n", "<C-z>", "u", opts)                          -- Ctrl+Z: Deshacer
 map("n", "<C-y>", "<C-r>", opts)                      -- Ctrl+Y: Rehacer
