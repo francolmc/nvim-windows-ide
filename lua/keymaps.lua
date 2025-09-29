@@ -35,6 +35,24 @@ map("i", "<C-Delete>", "<C-o>dw", opts)               -- Ctrl+Delete: Borrar pal
 -- 🔢 Números de línea y utilidades
 map("n", "<F3>", ":set number!<CR>", opts)            -- F3: Toggle números de línea
 map("n", "<F4>", ":set list!<CR>", opts)              -- F4: Toggle caracteres invisibles
+map("n", "<F5>", function()                           -- F5: Toggle transparencia Rose Pine
+    if vim.g.colors_name == 'rose-pine' then
+        local current_bg = vim.api.nvim_get_hl_by_name('Normal', true).background
+        if current_bg == nil then
+            -- Activar fondo opaco
+            vim.api.nvim_set_hl(0, "Normal", { bg = "#191724" })  -- Base color de Rose Pine
+            vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1f1d2e" })
+            print("🌹 Rose Pine: Transparencia desactivada")
+        else
+            -- Activar transparencia
+            vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+            vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+            print("🌹 Rose Pine: Transparencia activada")
+        end
+    else
+        print("⚠️  Toggle transparencia solo funciona con Rose Pine")
+    end
+end, opts)
 
 -- 🖥️ Terminal integrada básica
 map("n", "<C-`>", ":split | terminal<CR>", opts)      -- Ctrl+`: Abrir terminal

@@ -143,9 +143,14 @@ require("lazy").setup({
 				dark_variant = 'main',
 				bold_vert_split = false,
 				dim_nc_background = false,
-				disable_background = false,
-				disable_float_background = false,
+				disable_background = true,  -- Fondo transparente principal
+				disable_float_background = true,  -- Ventanas flotantes transparentes
 				disable_italics = false,
+                styles = {
+                    bold = true,
+                    italic = true,
+                    transparency = true,
+                },
 				groups = {
 					background = 'base',
 					background_nc = '_experimental_nc',
@@ -1271,6 +1276,34 @@ vim.cmd([[
 -- 🎨 Configurar tema (puedes cambiar aquí)
 -- Opciones: 'vscode', 'catppuccin', 'tokyonight', 'rose-pine'
 vim.cmd.colorscheme('rose-pine')  -- Cambia por el que prefieras
+
+-- 🌟 Configuraciones adicionales de transparencia para Rose Pine
+if vim.g.colors_name == 'rose-pine' then
+    -- Hacer transparentes los elementos principales
+    vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+    vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+    
+    -- Transparencia para barras laterales y ventanas
+    vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "none" })
+    vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "none" })
+    
+    -- Transparencia para Telescope
+    vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
+    vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "none" })
+    
+    -- Transparencia para Which-Key
+    vim.api.nvim_set_hl(0, "WhichKey", { bg = "none" })
+    vim.api.nvim_set_hl(0, "WhichKeyFloat", { bg = "none" })
+    
+    -- Transparencia para terminal
+    vim.api.nvim_set_hl(0, "TerminalNormal", { bg = "none" })
+    
+    -- Mantener bordes visibles pero transparentes
+    vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none", fg = "#9ccfd8" })  -- Color foam de Rose Pine
+    
+    print("🌹 Rose Pine con transparencia activada")
+end
 
 -- 🎉 Mensaje de bienvenida
 print("📝 Neovim con Oil, Telescope y LSP cargado correctamente!")

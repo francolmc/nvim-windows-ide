@@ -244,6 +244,7 @@ nvim
 | `Space h` | Clear highlight | Limpiar búsqueda |
 | `F3` | Toggle números | Números de línea |
 | `F4` | Toggle invisible | Caracteres ocultos |
+| `F5` | Toggle transparencia | Rose Pine transparente |
 
 ## 🎨 Temas Premium Incluidos
 
@@ -254,7 +255,7 @@ nvim
 | **🔵 VS Code** | Tema oscuro idéntico a VS Code (por defecto) | [Preview](#) | `:colorscheme vscode` |
 | **🐱 Catppuccin** | Tema pastel suave y elegante | [Preview](#) | `:colorscheme catppuccin` |
 | **🌃 Tokyo Night** | Inspirado en Tokyo de noche | [Preview](#) | `:colorscheme tokyonight` |
-| **🌹 Rose Pine** | Tema minimalista con toques rosados | [Preview](#) | `:colorscheme rose-pine` |
+| **🌹 Rose Pine** | Tema minimalista con transparencia | [Preview](#) | `:colorscheme rose-pine` |
 
 ### 🔄 Cambiar Tema
 
@@ -274,13 +275,34 @@ vim.cmd.colorscheme('vscode')  -- Cambiar por el tema deseado
 :Telescope colorscheme
 ```
 
-### 🎯 Personalización Adicional
+### � Rose Pine Transparente - Característica Especial
+
+**Rose Pine** incluye soporte completo para **fondo transparente**, perfecto para terminales con transparencia:
+
+#### ✨ Características de Transparencia:
+- 🪟 **Fondo transparente** principal y ventanas flotantes
+- 🔍 **Telescope transparente** para mejor integración visual
+- 📋 **Which-Key transparente** sin interferir con el fondo
+- 🖥️ **Terminal transparente** integrado
+- 🎨 **Bordes visibles** con colores Rose Pine mantenidos
+
+#### 🎛️ Control de Transparencia:
+```vim
+" Cambiar a Rose Pine
+:colorscheme rose-pine
+
+" Toggle transparencia (ON/OFF)
+" Presionar F5 para alternar
+```
+
+### �🎯 Personalización Adicional
 - Todos los temas incluyen soporte para:
   - ✅ LSP highlights
   - ✅ Git indicators  
   - ✅ Which-key popup
   - ✅ Telescope previews
   - ✅ Terminal colors
+  - ✅ **Rose Pine**: Transparencia completa 🌟
 
 ## � Características Avanzadas
 
