@@ -1,8 +1,29 @@
 # 🚀 Configuración Avanzada de Neovim para Windows 11
 
-> **Una configuración inicial de Neovim para tener un editor productivo y funcional light**
+>- 🤖 **IA Avanzada**: Avante.nvim con experiencia tipo Cursor IDE**Una configuración inicial de Neovim para tener un editor productivo y funcional light**
 
-[![Neovim](https://img.shields.io/badge/Neovim-0.10+-green.svg)](https://neovim.io/)
+[![Neovim](https://img.shields.io/badge/Neovim-0.10+-green.svg)](https#### � Avante.nvim - IA como Cursor IDE
+| Atajo | Acción | Descripción |
+|-------|---------|-------------|
+| `Space aa` | 🚀 Abrir Avante | Sidebar IA estilo Cursor |
+| `Space at` | 👁️ Toggle sidebar | Mostrar/ocultar panel IA |
+| `Space ar` | 🔄 Refresh | Actualizar contexto de IA |
+| `Space af` | ⚡ Focus | Cambiar foco sidebar ↔ editor |
+| `Space ac` | 📄 Add file | Agregar archivo actual al contexto |
+| `Space as` | ⏹️ Stop | Detener request IA actual |
+| `Alt+L` | ✅ Accept | Aceptar sugerencia de IA |
+
+#### �🧠 Autocompletado Nativo
+| Atajo | Acción | Descripción |
+|-------|---------|-------------|
+| `Tab` | ⭐ Completar/Indentar | Autocompletado LSP + indentación inteligente |
+| `Ctrl+Space` | 🔍 Forzar completado | Muestra todas las opciones disponibles |
+| `Ctrl+N` | ⬇️ Siguiente opción | Navega por opciones de autocompletado |
+| `Ctrl+P` | ⬆️ Opción anterior | Navega hacia atrás en opciones |
+| `Enter` | ✅ Confirmar | Acepta la opción seleccionada |
+| `Escape` | ❌ Cancelar | Cierra el menú de autocompletado |
+
+> **🎯 Experiencia Cursor:** Avante.nvim con Copilot optimizado + autocompletado nativo LSP.o/)
 [![Windows](https://img.shields.io/badge/Windows-11-blue.svg)](https://www.microsoft.com/windows/)
 [![Lua](https://img.shields.io/badge/Config-Lua-purple.svg)](https://lua.org/)
 [![Battery](https://img.shields.io/badge/Battery-100%25-green)](https://example.com)
@@ -44,7 +65,7 @@
 ## ✨ Características Principales
 
 - 🎯 **IDE Completo**: LSP, autocompletado, snippets, y diagnósticos
-- 🤖 **IA Integrada**: GitHub Copilot con chat interactivo
+- � **Inteligencia Nativa**: LSP completo, snippets, y autocompletado preciso
 - 🔍 **Búsqueda Avanzada**: Telescope con preview y filtros inteligentes
 - 📁 **Explorador Visual**: Oil.nvim para navegación intuitiva
 - 🌳 **Git Integrado**: Gitsigns, blame, y diffview nativo
@@ -77,8 +98,7 @@ winget install Neovim.Neovim Git.Git BurntSushi.ripgrep.MSVC sharkdp.fd DEVCOM.J
 | **fd** | Búsqueda de archivos optimizada | `winget install sharkdp.fd` |
 | **Nerd Font** | Iconos y símbolos | `winget install DEVCOM.JetBrainsMonoNerdFont` |
 
-### 🎯 GitHub Copilot (Opcional)
-- Tener cuenta de GitHub con Copilot activo
+
 - Se configurará automáticamente en la primera ejecución
 
 ## 📁 Estructura del Proyecto
@@ -103,15 +123,17 @@ C:\Users\{tu_usuario}\AppData\Local\nvim\
 - `telescope.nvim` - Fuzzy finder avanzado
 - `oil.nvim` - Explorador de archivos visual
 
-#### 💻 LSP & Autocompletado
+#### 🤖 IA & Autocompletado
+- `avante.nvim` - IA avanzada estilo Cursor IDE
+- `copilot.lua` - GitHub Copilot integrado con Avante
 - `mason.nvim` - Gestor de LSP servers
 - `nvim-lspconfig` - Configuración LSP
 - `nvim-cmp` - Motor de autocompletado
 - `LuaSnip` - Motor de snippets
 
 #### 🤖 Inteligencia Artificial
-- `copilot.lua` - GitHub Copilot nativo
-- `CopilotChat.nvim` - Chat interactivo con IA
+
+
 
 #### 🌳 Git Integration
 - `gitsigns.nvim` - Indicadores Git en línea
@@ -156,16 +178,31 @@ nvim
 
 # Si aparecen errores, esperar a que termine la instalación
 # Los LSP servers se instalan automáticamente con Mason
+# Avante.nvim compilará automáticamente en primer uso (Windows)
 ```
 
-### 🤖 Configurar GitHub Copilot
+### 🤖 Configurar Avante + Copilot
 ```vim
-" Dentro de Neovim, autenticarse con GitHub:
+" Dentro de Neovim, autenticarse con GitHub Copilot:
 :Copilot auth
 
-" Para usar el chat:
-" Space + a + c (Abrir Copilot Chat)
+" Verificar que Avante está funcionando:
+:AvanteToggle
+" Debería aparecer sidebar a la derecha
+
+" Para usar Avante:
+" 1. Space + aa → Abrir sidebar
+" 2. Escribir tu pregunta o usar @file
+" 3. Selectores Telescope: j/k para navegar, / para buscar
+" 4. Avante analiza tu proyecto automáticamente
 ```
+
+### 🔍 **Selectores Mejorados (Telescope)**
+- **@file** - Ahora usa Telescope con navegación completa
+- **Modelos** - Lista completa navegable con búsqueda
+- **Navegación**: `j/k` arriba/abajo, `/` buscar, `Enter` seleccionar
+
+
 
 ## ⌨️ Atajos de Teclado Completos
 
@@ -211,12 +248,12 @@ nvim
 | `Ctrl+`` | Terminal rápida | Atajo directo |
 | `Esc` | Salir terminal | Volver a normal |
 
-### 🤖 Inteligencia Artificial Agéntica
+### 🤖 Inteligencia Artificial SIMPLIFICADA
 
 #### ⚡ Autocompletado Automático (como VS Code)
 | Atajo | Acción | Descripción |
 |-------|---------|-------------|
-| `Tab` | Aceptar sugerencia **o indentar** | Acepta Copilot o indenta si no hay sugerencias |
+| `Tab` | Indentar / Autocompletar | Indentación inteligente + snippets nativos |
 | `Shift+Tab` | Sugerencia anterior | Navega sugerencias alternativas |
 | `Ctrl+Right` | Aceptar palabra | Solo acepta una palabra |
 | `Ctrl+Down` | Aceptar línea | Solo acepta una línea |
@@ -224,42 +261,107 @@ nvim
 | `Ctrl+C` | Rechazar | Oculta sugerencia actual |
 | `Escape` | Salir modo inserción | Funciona siempre para salir de edición |
 
-#### 💬 Comandos de Chat
+#### 🤖 GitHub Copilot - Solo Autocompletado
 | Atajo | Acción | Descripción |
 |-------|---------|-------------|
-| `Space ac` | Copilot Chat | Chat interactivo libre |
-| `Space ae` | Explicar código | Explicar selección |
+| `Tab` | ✅ Aceptar sugerencia | Acepta la sugerencia completa de Copilot |
+| `Ctrl+→` | ➡️ Palabra siguiente | Acepta solo la siguiente palabra |
+| `Ctrl+L` | � Línea completa | Acepta la línea completa |
+| `Ctrl+]` | ⏭️ Siguiente sugerencia | Cambia a la siguiente sugerencia |
+| `Ctrl+[` | ⏮️ Sugerencia anterior | Cambia a la sugerencia anterior |
+| `Ctrl+C` | ❌ Descartar | Descarta las sugerencias |
 
-#### 🔍 Análisis y Review  
-| Atajo | Acción | Descripción |
-|-------|---------|-------------|
-| `Space ar` | Code Review | Revisión completa |
-| `Space aa` | Análisis Completo | Análisis profundo del archivo |
-| `Space as` | Security Analysis | Análisis de seguridad |
+> **🎯 Simplicidad Total:** Solo autocompletado inteligente, sin chat ni comandos complejos.
 
-#### 🛠️ Generación y Mejoras
-| Atajo | Acción | Descripción |
-|-------|---------|-------------|
-| `Space at` | Generar Tests | Tests comprehensivos |
-| `Space af` | Fix Code | Correcciones automáticas |
-| `Space ao` | Optimize | Optimizar rendimiento |
-| `Space ap` | Best Practices | Aplicar mejores prácticas |
 
-#### 📚 Documentación y Calidad
-| Atajo | Acción | Descripción |
-|-------|---------|-------------|
-| `Space ad` | Documentation | JSDoc/docstrings completos |
-| `Space ai` | Error Handling | Mejorar manejo de errores |
 
-#### 🏗️ Generación de Archivos y Código
-| Atajo | Acción | Descripción |
-|-------|---------|-------------|
-| `Space acf` | Create File | Crear archivo completo con IA |
-| `Space acg` | Generate Component | Generar componente/función |
+### 🔧 **Configuración Técnica Simple**
 
-> **💡 Modo Agéntico:** Los comandos analizan contexto, entienden el lenguaje, y generan respuestas especializadas automáticamente.
+```lua
+-- Solo estas 4 líneas de configuración:
+window = { layout = 'vertical', width = 0.4, height = 0.8 }  -- Ventana a la derecha
+debug = false                                                -- Sin logs
+show_help = true                                            -- Mostrar ayuda
+auto_follow_cursor = true                                   -- Seguir cursor
+```
 
-> **🔥 Generación Automática:** Los comandos `acf` y `acg` crean archivos reales y insertan código automáticamente.
+## 🤖 **MODO AGÉNTICO - IA como Consultor Experto**
+
+### 🎯 **¿Qué es Modo Agéntico?**
+- **Agente = IA que actúa como experto humano**
+- **Contexto completo**: Entiende tu proyecto entero
+- **Decisiones inteligentes**: No solo responde, sino que **analiza y sugiere**
+- **Proactivo**: Anticipa problemas y da soluciones
+
+### 🚀 **Workflows Agénticos Reales**
+
+#### 📊 **1. Consultor de Arquitectura (`Space car`)**
+```bash
+# Selecciona tu código principal
+# Presiona Space + car
+# Resultado: Análisis como arquitecto senior
+
+"Este código tiene alta cohesión pero bajo acoplamiento. 
+Recomiendo:
+1. Implementar patrón Repository para datos
+2. Usar Dependency Injection para testabilidad  
+3. Separar lógica de negocio en services
+4. Considerar Event Sourcing para audit trail"
+```
+
+#### 🔍 **2. Code Review Agéntico (`Space crv`)**
+```bash
+# Selecciona función/clase
+# Presiona Space + crv  
+# Resultado: Review completo como tech lead
+
+"CODE REVIEW:
+✅ Calidad: Código limpio, nombres claros
+⚠️  Seguridad: Falta validación de input en línea 23
+🚀 Performance: N+1 query problem en línea 45
+🧪 Testing: Necesita unit tests para edge cases
+📚 Docs: Agregar JSDoc para métodos públicos"
+```
+
+#### 🧠 **3. Chat Agéntico Avanzado (`Space cc`)**
+```bash
+# Abre chat y escribe prompts agénticos:
+
+"Actúa como CTO. Revisa mi proyecto y sugiere roadmap técnico para los próximos 6 meses"
+
+"Como experto en seguridad, audita mi código y crea checklist de seguridad"
+
+"Eres arquitecto cloud. Diseña la infraestructura para escalar mi app a 1M usuarios"
+```
+
+### 🎪 **Prompts Agénticos Potentes**
+
+#### Para **Análisis de Proyecto**:
+```
+"Como senior architect, analiza mi codebase y sugiere:
+1. Mejoras de arquitectura inmediatas
+2. Refactoring necesario  
+3. Patrones aplicables
+4. Plan de migración a microservicios"
+```
+
+#### Para **Debugging Avanzado**:
+```
+"Como experto debugger, analiza este error y proporciona:
+1. Causa raíz del problema
+2. Fix inmediato
+3. Prevención futura
+4. Tests para evitar regresión"
+```
+
+#### Para **Optimización**:
+```
+"Como performance engineer, optimiza este código para:
+1. Reducir latencia 50%
+2. Mejorar throughput
+3. Reducir memoria
+4. Optimizar para mobile"
+```
 
 ### 🚀 Cómo Usar el Autocompletado IA
 

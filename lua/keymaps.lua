@@ -3,7 +3,21 @@ local map = vim.keymap.set
 local opts = { silent = true }
 
 -- 💾 Archivo básico
-map("n", "<C-s>", ":w<CR>", opts)                     -- Ctrl+S: Guardar
+-- 🤖 AVANTE.NVIM - IA como Cursor IDE (configuración optimizada)
+-- Space+aa: Abrir/cerrar sidebar de Avante
+-- Space+at: Toggle sidebar visibility
+-- Space+ar: Refresh sidebar
+-- Space+af: Switch focus (sidebar <-> editor)
+-- Space+ac: Add current buffer to selected files
+-- Space+as: Stop current AI request
+-- M+l: Accept suggestion (Alt+L)
+
+-- 🧠 AUTOCOMPLETADO NATIVO: LSP + nvim-cmp sin dependencias externas
+-- Tab: Autocompletar/Indentar
+-- Ctrl+Space: Forzar completado
+-- Ctrl+N/P: Navegar opciones
+-- Enter: Confirmar selección
+-- Escape: Cancelar", "<C-s>", ":w<CR>", opts)                     -- Ctrl+S: Guardar
 map("i", "<C-s>", "<ESC>:w<CR>a", opts)               -- Ctrl+S en modo insertar
 map("n", "<C-q>", ":q<CR>", opts)                     -- Ctrl+Q: Salir
 map("n", "<C-n>", ":enew<CR>", opts)                  -- Ctrl+N: Nuevo archivo
@@ -97,47 +111,33 @@ map("n", "<leader>gd", "<CMD>DiffviewOpen<CR>", opts)                           
 map("n", "<leader>gh", "<CMD>DiffviewFileHistory<CR>", opts)                     -- Space+gh: Ver historial del archivo
 map("n", "<leader>gc", "<CMD>DiffviewClose<CR>", opts)                           -- Space+gc: Cerrar diff view
 
--- 🤖 IA Agéntica - Autocompletado y Comandos Avanzados
+-- 🤖 IA SIMPLE - CopilotChat fácil de entender
 
 -- AUTOCOMPLETADO AUTOMÁTICO (como VS Code):
--- Tab: Aceptar sugerencia de Copilot (prioridad) o navegar autocompletado
+-- Tab: Aceptar sugerencia de Copilot (prioridad) o indentar
 -- Shift+Tab: Sugerencia anterior de Copilot
--- Ctrl+Right: Aceptar solo una palabra de la sugerencia
+-- Ctrl+Right: Aceptar solo una palabra de la sugerencia  
 -- Ctrl+Down: Aceptar solo una línea de la sugerencia
 -- Alt+]: Siguiente sugerencia alternativa
 -- Alt+[: Sugerencia anterior alternativa
 -- Ctrl+C: Rechazar sugerencia
 
--- Comandos de chat y análisis:
--- Space+ac: Chat, Space+ae: Explicar, Space+ar: Review, Space+at: Tests, Space+af: Fix
+-- COMANDOS DE CHAT BÁSICOS (4 principales):
+-- Space+cc: Abrir Copilot Chat (conversación libre)
+-- Space+ce: Explicar código seleccionado (análisis profundo)
+-- Space+cf: Corregir errores en código seleccionado (fix inteligente)  
+-- Space+ca: Preguntar cualquier cosa (consultor experto)
 
--- Comandos agénticos avanzados (requieren selección visual):
--- Space+ao: Optimizar código para rendimiento
--- Space+ad: Generar documentación completa
--- Space+as: Análisis de seguridad
--- Space+ap: Aplicar mejores prácticas por lenguaje
--- Space+ai: Mejorar manejo de errores
--- Space+aa: Análisis completo del archivo (sin selección)
+-- COMANDOS AGÉNTICOS AVANZADOS (opcionales):
+-- Space+car: Consultor de arquitectura (como arquitecto senior)
+-- Space+crv: Code review completo (como tech lead)
 
--- GENERACIÓN DE ARCHIVOS Y CÓDIGO:
--- Space+acf: Crear archivo completo con IA (pide nombre y descripción)
--- Space+acg: Generar componente/función (pide tipo, nombre y specs)
--- ¡Los archivos se crean automáticamente con el código generado!
-
--- 🤖 IA / Copilot keymaps (definidos en la configuración de CopilotChat)
--- Space+ac: Abrir Copilot Chat
--- Space+ae: Explicar código (Ask Copilot)
--- Space+ar: Revisar código (solo en modo visual)
--- Space+at: Generar tests (solo en modo visual)  
--- Space+af: Arreglar código (solo en modo visual)
-
--- Copilot suggestions keymaps (automáticos con copilot.lua):
--- Tab: Aceptar sugerencia
--- Ctrl+Right: Aceptar palabra
--- Ctrl+L: Aceptar línea
--- Ctrl+]: Siguiente sugerencia
--- Ctrl+[: Sugerencia anterior
--- Ctrl+C: Descartar sugerencia
+-- � AUTOCOMPLETADO NATIVO: LSP + nvim-cmp sin dependencias externas
+-- Tab: Autocompletar/Indentar
+-- Ctrl+Space: Forzar completado
+-- Ctrl+N/P: Navegar opciones
+-- Enter: Confirmar selección
+-- Escape: Cancelar
 
 
 
