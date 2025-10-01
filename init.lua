@@ -498,7 +498,8 @@ require("lazy").setup({
 				"jsonls",          -- JSON
 				
 				-- Python (Python based)
-				"pylsp",           -- Python LSP (pure Python, no C)
+				-- "pylsp",           -- Python LSP (pure Python, no C)
+				"pyright",         -- Python LSP (Node.js based, no C)
 				
 				-- Lua (Lua based)
 				"lua_ls",          -- Lua
@@ -1234,9 +1235,13 @@ require("lazy").setup({
 				"zbirenbaum/copilot.lua",
 				config = function()
 					require("copilot").setup({
-						-- ⚡ CONFIGURACIÓN MÍNIMA - Solo para que funcione con Avante
-						suggestion = { enabled = false }, -- Desactivar sugerencias automáticas
-						panel = { enabled = false }, -- Sin panel
+						-- ⚡ CONFIGURACIÓN PARA AUTOCOMPLETADO - Activado para sugerencias
+						suggestion = { 
+							enabled = true,  -- ✅ ACTIVADO: Mostrar sugerencias automáticas
+							auto_trigger = true,  -- Sugerencias automáticas al escribir
+							debounce = 75,  -- Tiempo de espera reducido para respuesta rápida
+						},
+						panel = { enabled = false }, -- Sin panel (usamos Avante)
 						copilot_node_command = "node", -- Usar node del sistema
 					})
 				end,
